@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
+from werkzeug.security import generate_password_hash, check_password_hash
 import MySQLdb.cursors
 import re
 
@@ -18,7 +19,27 @@ mysql = MySQL(app)
 #templates rendering
 @app.route('/')
 def index():
-    return render_template('index.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    sql ="""
+    SELECT blood_group.blood_group_id,
+    blood_group.blood_group_name,
+    users.full_name,
+    users.city,
+    users.contact,
+    blood_request.blood_qty_ml
+    FROM blood_group,
+    blood_request ,users 
+    where blood_request.blood_group_id = blood_group.blood_group_id 
+    and blood_request.user_id = users.user_id
+    """
+    # cursor.execute('SELECT blood_group.blood_group_id,blood_group.blood_group_name,users.full_name,users.city,users.contact,blood_request.blood_qty_mlFROM blood_group,blood_request ,users where blood_request.blood_group_id=blood_group.blood_group_id and blood_request.user_id=users.user_id')
+    # cursor.execute(sql)
+    cursor.execute("SELECT * FROM blood_request_list")
+    request_list = cursor.fetchone()
+    print("list of res",request_list)
+    
+    
+    return render_template('index.html',request_list=request_list)
 
 @app.route('/about')
 def about():
@@ -66,34 +87,42 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if request.method == 'POST' and 'email' in request.form and 'password' in request.form and 'email' in request.form:
-        username = request.form['email']
-        password = request.form['password']
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form and 'fullname' in request.form:
         email = request.form['email']
+        password = request.form['password']
+        fullname = request.form['fullname']
+        contact  = request.form['phone_no']
+        blood_group  = request.form['blood_group_id']
+        city  = request.form['city']
+        is_donor  = 'is_donor' in request.form
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-
-        cursor.execute(
-            "SELECT * FROM users WHERE full_name LIKE %s", [username])
-
+        cursor.execute('SELECT * FROM users WHERE email = %s',[email])
         user = cursor.fetchone()
         if user:
             flash("Account already exists!", "danger")
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             flash("Invalid email address!", "danger")
-        elif not re.match(r'[A-Za-z0-9]+', username):
+        elif not re.match(r'[A-Za-z0-9]+', email):
             flash("Username must contain only characters and numbers!", "danger")
-        elif not username or not password or not email:
+        elif not email or not password or not email:
             flash("Incorrect username/password!", "danger")
         else:
+            
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute(
-                'INSERT INTO users VALUES (NULL, %s, %s, %s,NULL,NULL,NULL,0)', (username, email, password))
+            query ='INSERT INTO users VALUES (NULL,%s,%s,%s,%s,%s,%s,%s,NULL)'
+            t  = (fullname, email, password,contact,city,blood_group,is_donor)
+            cursor.execute(query,t)
             mysql.connection.commit()
             flash("You have successfully registered!", "success")
             return redirect(url_for('login'))
     elif request.method == 'POST':
         flash("Please fill out the form!", "danger")
-    return render_template('signup.html', title="Register")
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM blood_group")
+    blood_group=cursor.fetchall()
+    # print(blood_group)
+    return render_template('signup.html', title="Register",blood_group=blood_group)
 
 
 @app.route('/logout')

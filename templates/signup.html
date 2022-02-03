@@ -1,39 +1,134 @@
 {% extends 'base.html' %}{% block title %} Home{% endblock title %} {% block body %}
 
 <div class="d-flex justify-content-center mt-4 mb-4">
-    <div class="col-lg-4 col-md-12 footer-form">
-        <div class="form-card">
-            <div class="form-title">
-                <h1>Sign Up</h1>
-            </div>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div  class="alert alert-danger" role="alert">
-                    {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
-                </div>
-            {% endif %}
-            {% endwith %}
-            <form action="/signup" method="POST">
-                <div class="form-body mt-4">
-                    <div class="form-group">
-                        <label for="exampleInputName1">Name</label>
-                        <input type="text"  name="name" id="name" placeholder="Enter Name" required class="form-control">
-                    </div>
 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="text"  name="email" id="email" placeholder="Enter Email Address" required class="form-control">
-                    </div>
-                   
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Enter Password" required class="form-control">
-                    </div>
-    
-                
-                    <button class="btn btn-sm btn-primary w-100">Sign Up</button>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
+
+                <div class="form-title">
+                    <h1>Sign Up</h1>
                 </div>
-                  </form>
+                <p>Fill all form field to go to next step</p>
+                <form action="/signup" method="POST" id="msform">
+                    <!-- progressbar -->
+                    <ul id="progressbar">
+                        <li class="active" id="account"><strong>Account</strong></li>
+                        <li id="personal"><strong>Personal</strong></li>
+                        <li id="payment"><strong>Image</strong></li>
+                        <li id="confirm"><strong>Finish</strong></li>
+                    </ul>
+                    {% with messages = get_flashed_messages() %} {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ messages[0] }}. Go to <a href="{{ url_for('login') }}">login page</a>.
+                    </div>
+                    {% endif %} {% endwith %}
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div> <br>
+                    <!-- fieldsets -->
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Account Information:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 1 - 4</h2>
+                                </div>
+                            </div>
+                            <label class="fieldlabels">Email: *</label>
+                            <input type="email" id="email" name="email" placeholder="Email Id" />
+
+
+                            <label class="fieldlabels">Password:
+                                *</label>
+                            <input type="password" name="password" onkeyup='check();' id="password" placeholder="Password" />
+                            <label class="fieldlabels">Confirm Password: *</label>
+                            <input type="password" onkeyup='check();' name="confirm_password" id="confirm_password" placeholder="Confirm Password" />
+                            <span id='message'></span>
+                        </div> <input type="button" name="next" class="btn-sn btn-primary next action-button" value="Next" />
+
+
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Personal Information:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 2 - 4</h2>
+                                </div>
+                            </div> <label class="fieldlabels">Full Name: *</label> <input type="text" name="fullname" id="fullname" placeholder="Full Name" />
+                            <label class="fieldlabels">Contact No.: *
+                            </label> <input type="number" onkeydown="return event.keyCode !== 69" name="phone_no" id="phone_no" placeholder="Contact No." />
+                            <label class="fieldlabels">Select blood group: *</label>
+
+
+                            <select name="blood_group_id" id="blood_group_id" class="form-select form-select-lg mb-3">
+                                <!-- <option selected>Open this select menu</option> -->
+                                {% for i in blood_group %}
+                                <option value="{{i['blood_group_id']}}">{{i['blood_group_name']}}</option>
+                                {% endfor %}
+                            </select>
+                            <br />
+                            <label class="fieldlabels">City: *</label> <input type="text" name="city" id="city" placeholder="Enter City" />
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" checked id="is_donor" name="is_donor" />
+                                <label class="form-check-label" for="flexCheckIndeterminate">
+                                    Registers as donor
+                                </label>
+                            </div>
+
+                        </div> <input type="button" name="next" class="next action-button" value="Next" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Image Upload:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 3 - 4</h2>
+                                </div>
+                            </div>
+                            <label class="fieldlabels">Upload Your Photo:</label> <input type="file" name="profile_img" id="profile_img" accept="image/*">
+                        </div>
+
+                        <input type="submit" name="next" class="action-button" value="Submit" />
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Finish:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 4 - 4</h2>
+                                </div>
+                            </div> <br><br>
+                            <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
+                            <div class="row justify-content-center">
+                                <div class="col-3"> <img src="static-assets/images/success.png" class="fit-image">
+                                </div>
+                            </div> <br><br>
+                            <div class="row justify-content-center">
+                                <div class="col-7 text-center">
+                                    <h5 class="purple-text text-center">You Have Successfully Signed Up</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-body mt-4 mb-4">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{url_for('login')}}">Already signed up try to
+                            login</a>
+                    </div>
+            </div>
         </div>
     </div>
 </div>

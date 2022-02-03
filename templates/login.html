@@ -6,31 +6,37 @@
             <div class="form-title">
                 <h1>Login</h1>
             </div>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div  class="alert alert-danger" role="alert">
-                    {{ messages[0] }}. Go to <a href="{{ url_for('login') }}">login page</a>.
-                </div>
-            {% endif %}
-            {% endwith %}
-            <form action="/login" method="POST">
-            <div class="form-body mt-4">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="text"  name="email" id="email" placeholder="Enter Email Address" required class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Enter Password" required class="form-control">
-                </div>
-
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1" checked>
-                    <label class="form-check-label" for="exampleCheck1"> Remember me</label>
-                </div>
-                <button class="btn btn-sm btn-primary w-100">Login</button>
+            {% with messages = get_flashed_messages() %} {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ messages[0] }}. Go to <a href="{{ url_for('login') }}">login page</a>.
             </div>
-              </form>
+            {% endif %} {% endwith %}
+
+
+
+            <form action="/login" method="POST" id="msform">
+                <div class="form-card">
+                    <div class="form-group">
+                        <label class="fieldlabels">Email address</label>
+                        <input type="text" name="email" id="email" placeholder="Enter Email Address" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="fieldlabels">Password</label><input type="password" name="password" id="password" placeholder="Enter Password" required class="form-control">
+                    </div>
+
+
+
+                    <button class="btn btn-primary next action-button">Login</button>
+
+                    <div class="form-body mt-4">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{url_for('signup')}}">New around here? Sign
+                            up</a>
+                        <a class="dropdown-item text-danger" href="#">Forgot password?</a>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
