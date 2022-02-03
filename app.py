@@ -20,25 +20,8 @@ mysql = MySQL(app)
 @app.route('/')
 def index():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    sql ="""
-    SELECT blood_group.blood_group_id,
-    blood_group.blood_group_name,
-    users.full_name,
-    users.city,
-    users.contact,
-    blood_request.blood_qty_ml
-    FROM blood_group,
-    blood_request ,users 
-    where blood_request.blood_group_id = blood_group.blood_group_id 
-    and blood_request.user_id = users.user_id
-    """
-    # cursor.execute('SELECT blood_group.blood_group_id,blood_group.blood_group_name,users.full_name,users.city,users.contact,blood_request.blood_qty_mlFROM blood_group,blood_request ,users where blood_request.blood_group_id=blood_group.blood_group_id and blood_request.user_id=users.user_id')
-    # cursor.execute(sql)
-    cursor.execute("SELECT * FROM blood_request_list")
-    request_list = cursor.fetchone()
-    print("list of res",request_list)
-    
-    
+    cursor.execute(" SELECT  * FROM blood_request_list")
+    request_list = cursor.fetchall()
     return render_template('index.html',request_list=request_list)
 
 @app.route('/about')

@@ -65,50 +65,40 @@
             <p>Blood is the most precious gift that anyone can give to another person – the gift of life. A decision to donate your blood can save a life, or even several if your blood is separated into its components – red cells, platelets and plasma –
                 which can be used individually for patients with specific conditions.</p>
         </div>
-        <div class="row news-row">
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Request Id</th>
+                        <th scope="col">Blood Group</th>
+                        <th scope="col">Blood Qty (Milli liter)</th>
+                        <th scope="col">Request Person</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Request Time</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                {% for request_list in request_list %}
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ request_list['blood_group_id'] }}</th>
+                        <td>{{ request_list['blood_group_name'] }}</td>
+                        <td>{{ request_list['blood_qty_ml'] }}</td>
+                        <td>{{ request_list['full_name'] }}</td>
+                        <td>{{ request_list['city'] }}</td>
+                        <td>{{ request_list['contact'] }}</td>
+                        <td>{{ request_list['timestamp'] }}</td>
+                        <td><a href="" type="button" class="btn btn-danger btn-sm mx-1">Donate</button>
 
-            <div class="col-md-6">
-                <div class="news-card">
-                    <div class="image">
-                        <img src="static/assets/images/blog/blog_04.jpg" alt="">
-                    </div>
-                    <div class="detail">
-                        <h3>Latest News about Smarteye</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce fringilla vel nisl a dictum. Donec ut est arcu. Donec hendrerit consectetur adipiscing elit. </p>
-                        <p class="footp">
-                            27 Comments <span>/</span> Blog Design <span>/</span> Read More
-                        </p>
-                    </div>
-                </div>
-            </div>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
         </div>
     </div>
 </div>
 
-<!--*************** About Us Starts Here ***************-->
-<section id="about" class="contianer-fluid about-us">
-    <div class="container">
-        <div class="row session-title">
-            <h2>About Us</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has</p>
-        </div>
-        <div class="row">
-            <div class="col-md-6 text">
-                <h2>About Blood Doners</h2>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                <p> It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some formhumour, or randomised words which don't look even slightly believable. If you are going to use a passage. industry's
-                    standard dummy has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                <p>Industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                    essentially unchanged.</p>
-            </div>
-            <div class="col-md-6 image">
-                <img src="static/assets/images/about.jpg" alt="">
-            </div>
-        </div>
-    </div>
-</section>
 
 
 
@@ -150,9 +140,14 @@
                     <img src="static/assets/images/gallery/g9.jpg">
                 </div>
                 <div class="gg-element">
-                    <img src="static/assets/images/gallery/g10.jpg">
-                </div>
+                <video width="400" controls>
+  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
 
+  Your browser does not support HTML video.
+</video>
+
+                </div>
+                
 
             </div>
         </div>
@@ -174,7 +169,8 @@
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g1.jpg" alt="">
                     <h4><b>1 - </b>Registration</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis</p>
+                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    </p>
                     <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -182,7 +178,8 @@
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g2.jpg" alt="">
                     <h4><b>2 - </b>Seeing</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis</p>
+                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    </p>
                     <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -190,7 +187,8 @@
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g3.jpg" alt="">
                     <h4><b>3 - </b>Donation</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis</p>
+                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    </p>
                     <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -198,7 +196,8 @@
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g4.jpg" alt="">
                     <h4><b>4 - </b>Save Life</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis</p>
+                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    </p>
                     <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -209,6 +208,26 @@
 </section>
 
 
+<!--*************** About Us Starts Here ***************-->
+<section id="about" class="contianer-fluid about-us">
+    <div class="container">
+        <div class="row session-title">
+            <h2>About Us</h2>
+            <p>Blood donation will cost you nothing, but it will save a life!</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text">
+                <h2>About Blood Doners</h2>
+                <p>Dedicated to the well-being of all people and guided by science, the World Health Organization leads and champions global efforts to give everyone, everywhere an equal chance to live a healthy life.</p>
+                <p>BRC on a white background, is the Emblem of Red Cross, recognized in 2099 as the distinctive sign for medical relief teams on the battle field.</p>
+                <p>Today in the developed world, most blood donors are unpaid volunteers who donate blood for a community supply. In some countries, established supplies are limited and donors usually give blood when family or friends need a transfusion (directed donation). Many donors donate for several reasons, such as a form of charity, general awareness regarding the demand for blood, increased confidence in oneself, helping a personal friend or relative, and social pressure. Despite the many reasons that people donate, not enough potential donors actively donate. However, this is reversed during disasters when blood donations increase, often creating an excess supply that will have to be later discarded. In countries that allow paid donation some people are paid, and in some cases there are incentives other than money such as paid time off from work. People can also have blood drawn for their own future use (autologous donation). Donating is relatively safe, but some donors have bruising where the needle is inserted or may feel faint.</p>
+            </div>
+            <div class="col-md-6 image">
+                <img src="static/assets/images/about.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
