@@ -2,8 +2,16 @@
 
 
 
+{% with messages = get_flashed_messages() %} {% if messages %}
+<div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+    <strong>Thanks </strong>{{ messages[0] }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{% endif %} {% endwith %}
 
-<!-- ################# Slider Starts Here#######################--->
+<!-- ################# Slider Starts Here####################### -->
 
 <div class="slider-detail">
 
@@ -18,12 +26,12 @@
                 <img class="d-block w-100" src="static/assets/images/slider/slide-02.jpg" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 class=" bounceInDown">Donate Blood & Save a Life</h5>
-                    <p class=" bounceInLeft">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam justo neque, <br> aliquet sit amet elementum vel, vehicula eget eros. Vivamus arcu metus, mattis <br> sed sagittis at, sagittis quis neque. Praesent.</p>
+                    <p class=" bounceInLeft">Give your blood and save life</p>
 
                     <div class=" vbh">
 
-                        <div class="btn btn-success  bounceInUp"> Book Appointment </div>
-                        <div class="btn btn-success  bounceInUp"> Contact US </div>
+                        <div class="btn btn-success  bounceInUp" data-toggle="modal" data-target="#exampleModalCenter"> Donate Now </div>
+                        <a href="#aboutus" ><div class="btn btn-success  bounceInUp"> Contact US </div></a>
                     </div>
                 </div>
             </div>
@@ -32,12 +40,12 @@
                 <img class="d-block w-100" src="static/assets/images/slider/slide-03.jpg" alt="Third slide">
                 <div class="carousel-caption vdg-cur d-none d-md-block">
                     <h5 class=" bounceInDown">Donate Blood & Save a Life</h5>
-                    <p class=" bounceInLeft">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam justo neque, <br> aliquet sit amet elementum vel, vehicula eget eros. Vivamus arcu metus, mattis <br> sed sagittis at, sagittis quis neque. Praesent.</p>
+                    <p class=" bounceInLeft">Give your blood and save life</p>
 
                     <div class=" vbh">
 
-                        <div class="btn btn-danger  bounceInUp"> Donate Now </div>
-                        <div class="btn btn-danger  bounceInUp"> Contact US </div>
+                        <div class="btn btn-danger  bounceInUp" data-toggle="modal" data-target="#exampleModalCenter"> Donate Now </div>
+                        <a href="#aboutus" target="#aboutus" ><div class="btn btn-danger  bounceInUp"> Contact US </div></a>
                     </div>
                 </div>
             </div>
@@ -57,101 +65,212 @@
 </div>
 
 
+<!-- blood stock-->
+<div id="blog" class="blog-container contaienr-fluid">
+    <div class="session-title row">
+        <h2> Blood Stock</h2>
+        <p>A Free blood you can takes from our <strong>B.R.C Hospital</strong> on Mumbai branch. here is blood stocks </p>
+    </div>
+    <div class="container">
+        {% if blood_stock|length == 0 %}
+        <div class="col-sm-12 empty-cart-cls text-center"> <img src="/static/assets/images/blood-64.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+            <h5> No blood stock available</h5>
+        </div>
+        {% else %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Blood Group Name</th>
+                    <th scope="col">Blood Qty (ml)</th>
+                    <th scope="col">Blood Group Receives</th>
+                </tr>
+            </thead>
+            {% for bs in blood_stock %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{ bs['blood_group_name'] }}</td>
+                    <td>{{ bs['blood_stock_qty_ml'] }}</td>
+                    <td>{{ bs['blood_group_receives'] }}</td>
+                                       
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        
+        
+
+        
+        
+    </div>
+</div>
+
+
 <!--  ################### Blood Request List #######################  -->
 <div id="blog" class="blog-container contaienr-fluid">
-    <div class="container">
         <div class="session-title row">
-            <h2> Blood Request List</h2>
+            <h2> Blood Donation Request</h2>
             <p>Blood is the most precious gift that anyone can give to another person – the gift of life. A decision to donate your blood can save a life, or even several if your blood is separated into its components – red cells, platelets and plasma –
                 which can be used individually for patients with specific conditions.</p>
         </div>
         <div class="container">
+        
+            {% if session['loggedin']  %}
+            <h4 class="text-center">My Blood Request List</h4>
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Request Id</th>
                         <th scope="col">Blood Group</th>
-                        <th scope="col">Blood Qty (Milli liter)</th>
+                        <th scope="col">Blood Qty (ml)</th>
                         <th scope="col">Request Person</th>
                         <th scope="col">City</th>
                         <th scope="col">Contact</th>
                         <th scope="col">Request Time</th>
+                        <th scope="col">Status</th>
+                
+                    </tr>
+                </thead>
+                {% for m_r_l in my_request_list %}
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ m_r_l['blood_request_id'] }}</th>
+                        <td>{{ m_r_l['blood_group_name'] }}</td>
+                        <td>{{ m_r_l['blood_qty_ml'] }}</td>
+                        <td>{{ m_r_l['full_name'] }}</td>
+                        <td>{{ m_r_l['city'] }}</td>
+                        <td>{{ m_r_l['contact'] }}</td>
+
+                        <td>{{ m_r_l['timestamp'] }}</td>
+                        {% if m_r_l['is_approved'] == 0 %}
+                        <td>Not Approved</td>
+                        {% else %}
+                        <td>Approved</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            {% endif %}
+
+            <h4 class="text-center mt-4" style="margin-top:25px;">Public Blood Request List</h4>
+            {% if request_list|length == 0 %}
+
+            <div class="card-body cart">
+                <div class="col-sm-12 empty-cart-cls text-center"> <img src="/static/assets/images/blood-64.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                    <h5> No request list found</h5>
+                </div>
+            </div>
+            {% else %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Request Id</th>
+                        <th scope="col">Blood Group</th>
+                        <th scope="col">Blood Qty (ml)</th>
+                        <th scope="col">Request Person</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Request Time</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 {% for request_list in request_list %}
                 <tbody>
                     <tr>
-                        <th scope="row">{{ request_list['blood_group_id'] }}</th>
+                        <th scope="row">{{ request_list['blood_request_id'] }}</th>
                         <td>{{ request_list['blood_group_name'] }}</td>
                         <td>{{ request_list['blood_qty_ml'] }}</td>
                         <td>{{ request_list['full_name'] }}</td>
                         <td>{{ request_list['city'] }}</td>
                         <td>{{ request_list['contact'] }}</td>
-                        <td>{{ request_list['timestamp'] }}</td>
-                        <td><a href="" type="button" class="btn btn-danger btn-sm mx-1">Donate</button>
 
+                        <td>{{ request_list['timestamp'] }}</td>
+                        {% if request_list['is_approved'] == 0 %}
+                        <td>Not Approved</td>
+                        {% else %}
+                        <td>Approved</td>
+                        {% endif %}
+                        {% if request_list['is_approved'] == 0 %}
+                        {% if session['loggedin']  %}
+                        <td><a href="./update-request/{{request_list['blood_request_id']}}" type="button" class="btn btn-danger btn-sm mx-1">Donate</a></td> 
+                        {% else %}
+                        <td><a href="./update-request/{{request_list['blood_request_id']}}" type="button" class="btn btn-danger disabled btn-sm mx-1">Donate</a></td>
+                        {% endif %}
+                        {% else %}
+                        <td><a type="button" class="btn btn-danger disabled btn-sm mx-1">Donated</a></td>    {% endif %}
                     </tr>
                 </tbody>
                 {% endfor %}
             </table>
+            {% endif %}
         </div>
+
     </div>
 </div>
 
 
 
 
-<!-- ################# Gallery Start Here #######################--->
+<!-- ################# Gallery Start Here ####################### -->
 
 <div id="gallery" class="gallery container-fluid">
     <div class="container">
         <div class="row session-title">
-            <h2>Checkout Our Gallery</h2>
+            <h2>Checkout Our Videos</h2>
         </div>
-        <div class="gallery-row row">
-            <div id="gg-screen"></div>
-            <div class="gg-box">
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g1.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g2.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g3.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g4.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g5.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g6.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g7.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g8.jpg">
-                </div>
-                <div class="gg-element">
-                    <img src="static/assets/images/gallery/g9.jpg">
-                </div>
-                <div class="gg-element">
-                <video width="400" controls>
-  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-
-  Your browser does not support HTML video.
-</video>
-
-                </div>
-                
-
-            </div>
+    
+        <div class="container">
+            <div class="row justify-content-center">
+            <h3>Our volunteers</h3>
         </div>
+            <video width="400" controls>
+                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+        </div>
+
+
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+            <h3>Our volunteers</h3>
+        </div>
+            <video width="400" controls>
+                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+        </div>
+
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+            <h3>Our volunteers</h3>
+        </div>
+            <video width="400" controls>
+                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+        </div>
+
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+            <h3>Our volunteers</h3>
+        </div>
+            <video width="400" controls>
+                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+        </div>
+
+
+
+
     </div>
+</div>
+</div>
 </div>
 
 
@@ -162,43 +281,45 @@
     <div class="container">
         <div class="row session-title">
             <h2>Donation Process</h2>
-            <p>The donation process from the time you arrive center until the time you leave</p>
+            <p>The blood donation process from the time you arrive until the time you leave takes about an hour. The donation itself is only about 8-10 minutes on average.</p>
         </div>
         <div class="row">
             <div class="col-md-3 col-sm-6 vd">
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g1.jpg" alt="">
                     <h4><b>1 - </b>Registration</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    <p>We’ll sign you in and go over basic eligibility.
                     </p>
-                    <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
+                    
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 vd">
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g2.jpg" alt="">
-                    <h4><b>2 - </b>Seeing</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    <h4><b>2 - </b>Health History</h4>
+                    <p>You’ll answer a few questions about your health history and places you’ve traveled, during a private and confidential interview.
+                        You’ll tell us about any prescription and/or over the counter medications that may be in your system.
                     </p>
-                    <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
+
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 vd">
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g3.jpg" alt="">
                     <h4><b>3 - </b>Donation</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    <p>If you’re donating whole blood, we’ll cleanse an area on your arm and insert a brand new sterile needle for the blood draw. (This feels like a quick pinch and is over in seconds.)
                     </p>
-                    <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
+
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 vd">
                 <div class="bkjiu">
                     <img src="static/assets/images/gallery/g4.jpg" alt="">
-                    <h4><b>4 - </b>Save Life</h4>
-                    <p>Ut wisi enim ad minim veniam, quis laore nostrud exerci tation ulm hedi corper turet suscipit lobortis
+                    <h4><b>4 - </b>Refreshment and Recovery</h4>
+                    <p>After donating blood, you’ll have a snack and something to drink in the refreshment area.
+                        You’ll leave after 10-15 minutes and continue your normal routine.
                     </p>
-                    <button class="btn btn-sm btn-danger">Readmore <i class="fas fa-arrow-right"></i></button>
+
                 </div>
             </div>
         </div>
@@ -206,6 +327,25 @@
 
     </div>
 </section>
+
+<!--*************** eligibility-requirements. ***************-->
+<section id="about" class="contianer-fluid about-us">
+    <div class="container">
+        <div class="row session-title">
+            <h2>Eligibility requirements</h2>
+            <p>To ensure the safety of both patients and donors, these are some of the requirements donors must meet to be eligible to donate blood based on their donation type. To explore a list of eligibility information</p>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item">Donation frequency: Every 56 days, up to 6 times a year*</li>
+            <li class="list-group-item">You must be in good health and feeling well**</li>
+            <li class="list-group-item">You must be at least 16 years old in most states</li>
+            <li class="list-group-item">You must weigh at least 110 lbs</li>
+        </ul>                
+        </div>
+    </div>
+</section>
+
+
 
 
 <!--*************** About Us Starts Here ***************-->
@@ -218,9 +358,22 @@
         <div class="row">
             <div class="col-md-6 text">
                 <h2>About Blood Doners</h2>
-                <p>Dedicated to the well-being of all people and guided by science, the World Health Organization leads and champions global efforts to give everyone, everywhere an equal chance to live a healthy life.</p>
-                <p>BRC on a white background, is the Emblem of Red Cross, recognized in 2099 as the distinctive sign for medical relief teams on the battle field.</p>
-                <p>Today in the developed world, most blood donors are unpaid volunteers who donate blood for a community supply. In some countries, established supplies are limited and donors usually give blood when family or friends need a transfusion (directed donation). Many donors donate for several reasons, such as a form of charity, general awareness regarding the demand for blood, increased confidence in oneself, helping a personal friend or relative, and social pressure. Despite the many reasons that people donate, not enough potential donors actively donate. However, this is reversed during disasters when blood donations increase, often creating an excess supply that will have to be later discarded. In countries that allow paid donation some people are paid, and in some cases there are incentives other than money such as paid time off from work. People can also have blood drawn for their own future use (autologous donation). Donating is relatively safe, but some donors have bruising where the needle is inserted or may feel faint.</p>
+                <p>Dedicated to the well-being of all people and guided by science, the World Health Organization leads
+                    and champions global efforts to give everyone, everywhere an equal chance to live a healthy life.
+                </p>
+                <p>BRC on a white background, is the Emblem of Red Cross, recognized in 2099 as the distinctive sign for
+                    medical relief teams on the battle field.</p>
+                <p>Today in the developed world, most blood donors are unpaid volunteers who donate blood for a
+                    community supply. In some countries, established supplies are limited and donors usually give blood
+                    when family or friends need a transfusion (directed donation). Many donors donate for several
+                    reasons, such as a form of charity, general awareness regarding the demand for blood, increased
+                    confidence in oneself, helping a personal friend or relative, and social pressure. Despite the many
+                    reasons that people donate, not enough potential donors actively donate. However, this is reversed
+                    during disasters when blood donations increase, often creating an excess supply that will have to be
+                    later discarded. In countries that allow paid donation some people are paid, and in some cases there
+                    are incentives other than money such as paid time off from work. People can also have blood drawn
+                    for their own future use (autologous donation). Donating is relatively safe, but some donors have
+                    bruising where the needle is inserted or may feel faint.</p>
             </div>
             <div class="col-md-6 image">
                 <img src="static/assets/images/about.jpg" alt="">
@@ -231,8 +384,4 @@
 
 
 
-
-
-
-
-{% endblock body %}
+  {% endblock body %}
