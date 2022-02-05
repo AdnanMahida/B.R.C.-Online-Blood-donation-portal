@@ -1,18 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
-from werkzeug.security import generate_password_hash, check_password_hash
 import MySQLdb.cursors
 import re
 
 app = Flask(__name__)
 # Change this to your secret key (can be anything, it's for extra protection)
-app.secret_key = 'qwerty123123qwerty'
+app.secret_key = '********'
 
 # Enter your database connection details below
-app.config['MYSQL_HOST'] = 'brc.mysql.database.azure.com'
-app.config['MYSQL_USER'] = 'ad'
-app.config['MYSQL_PASSWORD'] = 'bz*J^28<'
-app.config['MYSQL_DB'] = 'brc'
+app.config['MYSQL_HOST'] = '********'
+app.config['MYSQL_USER'] = '********'
+app.config['MYSQL_PASSWORD'] = '********'
+app.config['MYSQL_DB'] = '********'
 
 # Intialize MySQL
 mysql = MySQL(app)
@@ -165,7 +164,6 @@ def signup():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM blood_group")
     blood_group=cursor.fetchall()
-    # print(blood_group)
     return render_template('signup.html', title="Register",blood_group=blood_group)
 
 
@@ -183,9 +181,6 @@ def info_user():
 @app.route('/insert-donation',methods=['GET', 'POST'])
 def insert_dontation():
     if request.method == 'POST' and 'fullname' in request.form:
-        fullname = request.form['fullname']
-        contact  = request.form['contact']
-        city  = request.form['city']
         blood_group  = request.form['blood_group_id']
         blood_qty  = request.form['blood_qty']
         user_id = session['id']
