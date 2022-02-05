@@ -49,6 +49,7 @@ mypthon\Scripts\activate
 pip install -r requirements.txt
 
 python app.py
+
 ```
 
 Done <3
