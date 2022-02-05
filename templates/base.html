@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Bagadia Red Cross</title>
-    <link rel="shortcut icon" href="static/static/assets/images/fav.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/assets/images/blooddrop.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="static/assets/images/fav.jpg">
     <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
@@ -24,7 +24,7 @@
                 <div class="row nav-row">
                     <div class="col-md-3 logo">
                         <a href="{{ url_for('index')}}">
-                        <img src="static/assets/images/logo.jpg" alt="" >
+                        <img src="static/assets/images/logo.png" alt="no" >
                     </div>
                     <div class="col-md-9 nav-col">
                         <nav class="navbar navbar-expand-lg navbar-light">
@@ -147,12 +147,16 @@
             <div class="modal-body">
             You must eligible for basic requirements You are aged between 18 and 65.You weigh at least 50 kg.You must be in good health at the time you donate.
             <br/>
-            <strong>You have to visite our B.R.C. Hospital by given date </strong>
+            <strong>We will send date, time and location information through registered mail and contact number</strong>
             </div>
             <div class="modal-footer">
                 
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal">Proceed</button>
+              {% if session['loggedin']  %}
+              <a href="./info-user"> <button type="submit" class="btn btn-primary">Proceed</button></a>
+              {% else %}
+              <button id="btnProceed"  type="submit" onclick="sendError()" class="btn btn-primary">Proceed</button>
+              {% endif %}
             </div>
           </div>
         </div>

@@ -199,7 +199,7 @@
                         {% if session['loggedin']  %}
                         <td><a href="./update-request/{{request_list['blood_request_id']}}" type="button" class="btn btn-danger btn-sm mx-1">Donate</a></td> 
                         {% else %}
-                        <td><a href="./update-request/{{request_list['blood_request_id']}}" type="button" class="btn btn-danger disabled btn-sm mx-1">Donate</a></td>
+                        <td><a id="btnDonate"  onclick="sendError()" type="button" class="btn btn-danger btn-sm mx-1">Donate</a></td>
                         {% endif %}
                         {% else %}
                         <td><a type="button" class="btn btn-danger disabled btn-sm mx-1">Donated</a></td>    {% endif %}
@@ -224,52 +224,38 @@
             <h2>Checkout Our Videos</h2>
         </div>
     
-        <div class="container">
-            <div class="row justify-content-center">
-            <h3>Our volunteers</h3>
+        <div class="card-group">
+        <div class="card" style="width: 400px;">
+            <div class="card-body">
+                <video class="card-img-top"  class="video-fluid z-depth-1" width="380" autoplay  controls controlsList="nodownload" >
+                    <source src="https://brcstorage.blob.core.windows.net/brc/pexels-artem-podrez-6824176.mp4" type="video/mp4">
+                    Your browser does not support HTML video.
+                </video>
+                <h5 class="card-title mt-2">Our B.R.C. hospital </h5>
+                <p class="card-text">In B.R.C. hospital non profit organization that provides free services for patients</p>
+            </div>
         </div>
-            <video width="400" controls>
-                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
-                Your browser does not support HTML video.
-            </video>
+        <div class="card" style="width: 400px;">
+            <div class="card-body">
+                <video class="card-img-top"  class="video-fluid z-depth-1" width="380" autoplay  controls controlsList="nodownload">
+                    <source src="https://brcstorage.blob.core.windows.net/brc/pexels-gustavo-fring-6290528.mp4" type="video/mp4">
+                    Your browser does not support HTML video.
+                </video>
+                <h5 class="card-title mt-2">Free Helth checkup</h5>
+                <p class="card-text">We provides free Free helth checkup for everyone</p>
+            </div>
         </div>
-
-
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-            <h3>Our volunteers</h3>
+        <div class="card" style="width: 400px;">
+            <div class="card-body">
+                <video class="card-img-top"  class="video-fluid z-depth-1" width="380" autoplay  controls controlsList="nodownload">
+                    <source src="https://brcstorage.blob.core.windows.net/brc/pexels-julia-m-cameron-6893982.mp4" type="video/mp4">
+                    Your browser does not support HTML video.
+                </video>
+                <h5 class="card-title mt-2">Free Foods</h5>
+                <p class="card-text">We provides free meals for B.R.C. hospital patients</p>
+            </div>
         </div>
-            <video width="400" controls>
-                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
-                Your browser does not support HTML video.
-            </video>
         </div>
-
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-            <h3>Our volunteers</h3>
-        </div>
-            <video width="400" controls>
-                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
-                Your browser does not support HTML video.
-            </video>
-        </div>
-
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-            <h3>Our volunteers</h3>
-        </div>
-            <video width="400" controls>
-                <source src="https://brcstorage.blob.core.windows.net/brc/mov_bbb.mp4" type="video/mp4">
-                Your browser does not support HTML video.
-            </video>
-        </div>
-
-
-
-
-    </div>
-</div>
 </div>
 </div>
 

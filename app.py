@@ -174,20 +174,10 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-@app.route('/user',methods=['GET', 'POST'])
-def user():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute("""SELECT * FROM user """)
-        rows =  cursor.fetchall()
-        payload = []
-        content = {}
-        if mysql:
-            return "success"
-
-    except Exception as e:
-        return {'error': str(e)}
+@app.route('/info-user',methods=['GET', 'POST'])
+def info_user():
+    flash("for your interest in blood donation, We have sent address & other details through registered mail and contact number, you can also visit our B.R.C. hospital for more information", "success")
+    return redirect(url_for('index'))
 
 
 @app.route('/insert-donation',methods=['GET', 'POST'])
@@ -216,7 +206,7 @@ def update_request(id):
         t  = (user_id,id)
         cursor.execute(query,t)
         mysql.connection.commit()
-        flash("For your blood donation, whenever you get free you can visite our B.R.C. hospital and donate the blood !", "success")
+        flash("for your interest in blood donation, We have sent address & other details through registered mail and contact number, you can also visit our B.R.C. hospital for more information", "success")
     return redirect(url_for('index'))
 
 

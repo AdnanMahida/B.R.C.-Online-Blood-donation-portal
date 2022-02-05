@@ -109,3 +109,13 @@ $('#exampleModal').on('show.bs.modal', function(event) {
         // modal.find('.modal-title').text('' + recipient)
         // modal.find('.modal-body input').val(recipient)
 })
+
+
+$(function() {
+    $('#btnProceed').click(function() {
+        alert("Please Login first");
+    });
+    $('#btnDonate').click(function() {
+        alert('Please Login first');
+    })
+});
