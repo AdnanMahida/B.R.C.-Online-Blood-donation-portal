@@ -10,12 +10,14 @@
 
 
 ## Screenshots
+
+- All available blood stock
 ![image](screenshot/bloodstock.PNG)
 
-
+- Blood requested
 ![image](screenshot/check-blood-request.PNG)
 
-
+- Public blood request
 ![image](screenshot/public-blood-request.PNG)
 
 
@@ -28,7 +30,7 @@
 
 ## Installation
 
-- Requires [MySQL](https://www.mysql.com) and [Python](https://www.python.org).
+- Requires [MySQL 8.0 ](https://www.mysql.com) and [Python 3.9.0](https://www.python.org).
 
 - Import mysql structure from [here](/sqlstructure/)
 
@@ -39,9 +41,14 @@
 
 ```sh
 pip install virtualenv
+
 virtualenv mypython
+
 mypthon\Scripts\activate
+
 pip install -r requirements.txt
+
+python app.py
 ```
 
 Done <3
