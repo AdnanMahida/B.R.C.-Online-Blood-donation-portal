@@ -1,19 +1,20 @@
-# “B.R.C.”
-## Online blood donation portal
+# “B.R.C. - Online blood donation portal”
+
 
 ## Features
 - Check all available stocks of donated blood for use in case of an emergency.
 - Helps patients who urgently need blood so that they can get blood on this platform and they can also donate blood for other help.
 
 
-## Demo link
-[click here ](https://brc.azurewebsites.net)
+## Demo link(https://brc.azurewebsites.net)
 
 
 ## Screenshots
 ![image](screenshot/bloodstock.PNG)
 
+
 ![image](screenshot/check-blood-request.PNG)
+
 
 ![image](screenshot/public-blood-request.PNG)
 
@@ -34,11 +35,13 @@
 - Clone this repo
 
 - Install the dependencies and devDependencies and start the server.
-        ```sh
-        pip install virtualenv
-        virtualenv mypython
-        mypthon\Scripts\activate
-        pip install -r requirements.txt
-        ```
+
+
+```sh
+pip install virtualenv
+virtualenv mypython
+mypthon\Scripts\activate
+pip install -r requirements.txt
+```
 
 Done <3
